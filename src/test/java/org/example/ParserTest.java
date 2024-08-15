@@ -24,22 +24,26 @@ public class ParserTest {
     }
 
 
-//    @Test
-//    @DisplayName("Testing for incorrect plateau size")
-//    public void testPlateauSize() {
-//        var plateauParser = InputParser.plateauSizeParser("11");
-//        var size = new PlateauSize(1,1);
-//
-//        assertEquals(size, plateauParser);
-//    }
+    @Test
+    @DisplayName("Testing for incorrect plateau size")
+    public void testPlateauSize() {
+        var expectedOutput = InputParser.plateauSizeParser("55");
+        var expectedInput = new PlateauSize(5,5);
+
+        assertEquals(expectedOutput.getX(), expectedInput.getX());
+        assertEquals(expectedOutput.getY(), expectedInput.getY());
+    }
 
     @Test
     @DisplayName("Testing for correct position")
-    public void testsCorrect() {
-        var input = InputParser.positionParser("23n");
-        var expectedOutput = new Position(2,3, CompassDirection.N);
+    public void testsCorrectCompassDirection() {
 
-        assertEquals(expectedOutput, input);
+        var input = InputParser.positionParser("23s");
+        var expectedOutput = new Position(2,3, CompassDirection.S);
+
+        assertEquals(expectedOutput.getX(), input.getX());
+        assertEquals(expectedOutput.getY(), input.getY());
+        assertEquals(expectedOutput.getFacing(), input.getFacing());
     }
 
     @Test
@@ -59,8 +63,8 @@ public class ParserTest {
     @DisplayName("This test tests if the input matches what we currently have in the array list")
     public void testInstructionParserIsCorrect() {
         var input = InputParser.instructionParser("llrm");
-
         ArrayList<InstructionsVals> expectedOutput = new ArrayList<>();
+
         expectedOutput.add(InstructionsVals.L);
         expectedOutput.add(InstructionsVals.L);
         expectedOutput.add(InstructionsVals.R);

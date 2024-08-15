@@ -1,7 +1,7 @@
 package org.example.Enums;
 
-public enum Instructions {
+public enum InstructionsVals {
     L,
     R,
-    M
+    M;
 }

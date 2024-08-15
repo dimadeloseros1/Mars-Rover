@@ -13,36 +13,35 @@ public class InputParser {
 
 
     public static PlateauSize plateauSizeParser(String input) {
-        String[] plateauLocation = input.split(" ");
 
-        if (plateauLocation.length != 2) {
+        if (input.length() != 2) {
             throw new IllegalArgumentException();
         }
 
-//        try {
-            int xCord = Integer.parseInt(plateauLocation[0]);
-            int yCord = Integer.parseInt(plateauLocation[1]);
+        try {
+            int xCord = Integer.parseInt(String.valueOf(input.charAt(0)));
+            int yCord = Integer.parseInt(String.valueOf(input.charAt(1)));
 
-//            if (xCord <= 0 || yCord <= 0 || xCord > 10 || yCord > 10) {
-//                throw new ArrayIndexOutOfBoundsException("Please input plateau size greater than 0 and less than 10");
-//            } else {
-//            }
-
-//        } catch (ArrayIndexOutOfBoundsException exc) {
-//            throw new IllegalArgumentException("Invalid input");
-//        }
-                return new PlateauSize(xCord, yCord);
-
+            return new PlateauSize(xCord, yCord);
+        } catch (NumberFormatException e) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     public static Position positionParser(String input) {
-        String[] roverPosition = input.split(" ");
+        if (input.length() != 3) {
+            throw new IllegalArgumentException("Make sure that the input is exactly 3 characters long");
+        }
 
-        int firstParam = Integer.parseInt(roverPosition[0]);
-        int secondParam = Integer.parseInt(roverPosition[1]);
-        var thirdParam = CompassDirection.valueOf(roverPosition[2].toUpperCase(Locale.ROOT));
+        try {
+            int firstParam = Integer.parseInt(String.valueOf(input.charAt(0)));
+            int secondParam = Integer.parseInt(String.valueOf(input.charAt(1)));
+            var thirdParam = CompassDirection.valueOf(String.valueOf(input.charAt(2)).toUpperCase(Locale.ROOT));
 
-        return new Position(firstParam, secondParam, thirdParam);
+            return new Position(firstParam, secondParam, thirdParam);
+        } catch (NumberFormatException e) {
+            throw new StringIndexOutOfBoundsException();
+        }
     }
 
     public static List<InstructionsVals> instructionParser(String input) {
