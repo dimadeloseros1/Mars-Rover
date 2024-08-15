@@ -38,6 +38,6 @@ public class Position {
         this.facing = facing;
     }
 
-    int val1 = 23;
+
 
 }

@@ -1,14 +1,14 @@
 package org.example;
 
+import org.example.Parsers.InputParser;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        testMethod(2, 4);
 
+        var plateauSize = InputParser.plateauSizeParser("44");
+        System.out.println(plateauSize);
     }
 
-    public static int testMethod(int num1, int num2) {
-        return num1 + num2;
-    }
 }
