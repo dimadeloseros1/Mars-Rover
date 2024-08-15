@@ -25,8 +25,18 @@ public class ParserTest {
 
 
     @Test
+    @DisplayName("Testing for correct plateau size")
+    public void testValidPlateauSize() {
+        var expectedOutput = InputParser.plateauSizeParser("55");
+        var expectedInput = new PlateauSize(5,5);
+
+        assertEquals(expectedOutput.getX(), expectedInput.getX());
+        assertEquals(expectedOutput.getY(), expectedInput.getY());
+    }
+
+    @Test
     @DisplayName("Testing for incorrect plateau size")
-    public void testPlateauSize() {
+    public void testInvalidPlateauSize() {
         var expectedOutput = InputParser.plateauSizeParser("55");
         var expectedInput = new PlateauSize(5,5);
 
@@ -36,7 +46,7 @@ public class ParserTest {
 
     @Test
     @DisplayName("Testing for correct position")
-    public void testsCorrectCompassDirection() {
+    public void testValidCompassDirection() {
 
         var input = InputParser.positionParser("23s");
         var expectedOutput = new Position(2,3, CompassDirection.S);
@@ -47,8 +57,20 @@ public class ParserTest {
     }
 
     @Test
-    @DisplayName("This test tests if the input does not equal to what we have in the array list")
-    public void testInstructionParserIsIncorrect() {
+    @DisplayName("Testing for invalid position")
+    public void testsInvalidCompassDirection() {
+
+        var input = InputParser.positionParser("23w");
+        var expectedOutput = new Position(4,2, CompassDirection.S);
+
+        assertNotEquals(expectedOutput.getX(), input.getX());
+        assertNotEquals(expectedOutput.getY(), input.getY());
+        assertNotEquals(expectedOutput.getFacing(), input.getFacing());
+    }
+
+    @Test
+    @DisplayName("This test tests for invalid instructions")
+    public void testInvalidInstructionParserIsIncorrect() {
         var input = InputParser.instructionParser("ll");
 
         ArrayList<InstructionsVals> expectedOutput = new ArrayList<>();
@@ -60,8 +82,8 @@ public class ParserTest {
     }
 
     @Test
-    @DisplayName("This test tests if the input matches what we currently have in the array list")
-    public void testInstructionParserIsCorrect() {
+    @DisplayName("This test tests for valid instructions")
+    public void testValidInstructionParserIsCorrect() {
         var input = InputParser.instructionParser("llrm");
         ArrayList<InstructionsVals> expectedOutput = new ArrayList<>();
 
