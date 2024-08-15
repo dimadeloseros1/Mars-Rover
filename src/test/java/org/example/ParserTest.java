@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.Actions.PlateauSize;
+import org.example.Actions.Position;
+import org.example.Enums.CompassDirection;
 import org.example.Enums.InstructionsVals;
 import org.example.Parsers.InputParser;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,30 +34,39 @@ public class ParserTest {
 //    }
 
     @Test
+    @DisplayName("Testing for correct position")
+    public void testsCorrect() {
+        var input = InputParser.positionParser("23n");
+        var expectedOutput = new Position(2,3, CompassDirection.N);
+
+        assertEquals(expectedOutput, input);
+    }
+
+    @Test
     @DisplayName("This test tests if the input does not equal to what we have in the array list")
     public void testInstructionParserIsIncorrect() {
-        var plateauParser = InputParser.instructionParser("ll");
+        var input = InputParser.instructionParser("ll");
 
-        ArrayList<InstructionsVals> valsList = new ArrayList<>();
-        valsList.add(InstructionsVals.L);
-        valsList.add(InstructionsVals.M);
+        ArrayList<InstructionsVals> expectedOutput = new ArrayList<>();
+        expectedOutput.add(InstructionsVals.L);
+        expectedOutput.add(InstructionsVals.M);
 
 
-        assertNotEquals(valsList, plateauParser);
+        assertNotEquals(expectedOutput, input);
     }
 
     @Test
     @DisplayName("This test tests if the input matches what we currently have in the array list")
     public void testInstructionParserIsCorrect() {
-        var plateauParser = InputParser.instructionParser("llrm");
+        var input = InputParser.instructionParser("llrm");
 
-        ArrayList<InstructionsVals> valsList = new ArrayList<>();
-        valsList.add(InstructionsVals.L);
-        valsList.add(InstructionsVals.L);
-        valsList.add(InstructionsVals.R);
-        valsList.add(InstructionsVals.M);
+        ArrayList<InstructionsVals> expectedOutput = new ArrayList<>();
+        expectedOutput.add(InstructionsVals.L);
+        expectedOutput.add(InstructionsVals.L);
+        expectedOutput.add(InstructionsVals.R);
+        expectedOutput.add(InstructionsVals.M);
 
 
-        assertEquals(valsList, plateauParser);
+        assertEquals(expectedOutput, input);
     }
 }
