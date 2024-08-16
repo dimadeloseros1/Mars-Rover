@@ -3,7 +3,31 @@ package org.example.Actions;
 import org.example.Enums.CompassDirection;
 import org.example.Enums.InstructionsVals;
 
+import java.util.Scanner;
+
 public class ConsoleIO {
+
+
+    public static String instructionScanner(String str) {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        do {
+            try {
+                System.out.print(str);
+                input = scanner.nextLine();
+                if (input.equalsIgnoreCase("l") || input.equalsIgnoreCase("r")) {
+                    break;
+                } else {
+                    System.out.println("Please make sure to input either (l) or (r)");
+                }
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalStateException();
+            }
+        } while (true);
+        return input;
+    }
+
 
     public static CompassDirection compassDirection(String input) {
         return switch (input) {
