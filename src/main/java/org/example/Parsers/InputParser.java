@@ -13,34 +13,43 @@ public class InputParser {
 
 
     public static PlateauSize plateauSizeParser(String input) {
+        String[] splittingStr = input.split(" ");
 
-        if (input.length() != 2) {
+        if (splittingStr.length > 2) {
             throw new IllegalArgumentException();
         }
 
         try {
-            int xCord = Integer.parseInt(String.valueOf(input.charAt(0)));
-            int yCord = Integer.parseInt(String.valueOf(input.charAt(1)));
 
-            return new PlateauSize(xCord, yCord);
+            int xCord = Integer.parseInt(splittingStr[0]);
+            int yCord = Integer.parseInt(splittingStr[1]);
+
+            if (xCord == yCord && xCord >= 0 && xCord <= 10) {
+                return new PlateauSize(xCord, yCord);
+            } else {
+                throw new IllegalArgumentException("Coordinates must be between 0 and 10 and be equal");
+            }
+
         } catch (NumberFormatException e) {
-            throw new ArrayIndexOutOfBoundsException();
+            throw new IllegalArgumentException("Invalid number format. Please enter integers.");
         }
     }
 
     public static Position positionParser(String input) {
-        if (input.length() != 3) {
-            throw new IllegalArgumentException("Make sure that the input is exactly 3 characters long");
+        String[] splitting = input.split(" ");
+        if (splitting.length != 3) {
+            throw new ArrayIndexOutOfBoundsException();
         }
 
         try {
-            int firstParam = Integer.parseInt(String.valueOf(input.charAt(0)));
-            int secondParam = Integer.parseInt(String.valueOf(input.charAt(1)));
-            var thirdParam = CompassDirection.valueOf(String.valueOf(input.charAt(2)).toUpperCase(Locale.ROOT));
+
+            int firstParam = Integer.parseInt(splitting[0]);
+            int secondParam = Integer.parseInt(splitting[1]);
+            var thirdParam = CompassDirection.valueOf(splitting[2].toUpperCase(Locale.ROOT));
 
             return new Position(firstParam, secondParam, thirdParam);
-        } catch (NumberFormatException e) {
-            throw new StringIndexOutOfBoundsException();
+        } catch (IllegalArgumentException exc) {
+            throw new IllegalArgumentException();
         }
     }
 
@@ -49,7 +58,7 @@ public class InputParser {
         ArrayList<InstructionsVals> instructionList = new ArrayList<>();
 
         for (int i = 0; i < instructionVals.length; i++) {
-            var instruction = instructionVals[i].toUpperCase();
+            var instruction = instructionVals[i].toUpperCase(Locale.ROOT);
 
             switch (instruction) {
                 case "L":
@@ -63,7 +72,6 @@ public class InputParser {
                     break;
             }
         }
-
         return instructionList;
     }
 
