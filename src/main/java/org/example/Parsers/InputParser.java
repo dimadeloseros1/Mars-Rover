@@ -42,14 +42,22 @@ public class InputParser {
         }
 
         try {
+            int xCord = Integer.parseInt(splitting[0]);
+            int yCord = Integer.parseInt(splitting[1]);
+            var compassDirection = CompassDirection.valueOf(splitting[2].toUpperCase(Locale.ROOT));
 
-            int firstParam = Integer.parseInt(splitting[0]);
-            int secondParam = Integer.parseInt(splitting[1]);
-            var thirdParam = CompassDirection.valueOf(splitting[2].toUpperCase(Locale.ROOT));
+            if (xCord < 0 || yCord < 0 || xCord > 10 || yCord > 10) {
+                throw new IllegalArgumentException("Make sure to input equal coordinates and Compass direction to be N,S,E or W");
+            }
 
-            return new Position(firstParam, secondParam, thirdParam);
+            if (compassDirection != CompassDirection.W && compassDirection != CompassDirection.N && compassDirection != CompassDirection.S && compassDirection != CompassDirection.E) {
+                throw new IllegalArgumentException("Compass direction must be either N,W,E or S");
+            }
+            return new Position(xCord, yCord, compassDirection);
+
+
         } catch (IllegalArgumentException exc) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid input " + exc.getMessage());
         }
     }
 
