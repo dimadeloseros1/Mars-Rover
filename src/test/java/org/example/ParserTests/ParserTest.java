@@ -28,7 +28,7 @@ public class ParserTest {
     @DisplayName("Testing for correct plateau size")
     public void testValidPlateauSize() {
         var expectedOutput = InputParser.plateauSizeParser("5 5");
-        var expectedInput = new PlateauSize(5,5);
+        var expectedInput = new PlateauSize(5, 5);
 
         assertEquals(expectedOutput.getX(), expectedInput.getX());
         assertEquals(expectedOutput.getY(), expectedInput.getY());
@@ -47,7 +47,7 @@ public class ParserTest {
     public void testValidCompassDirection() {
 
         var input = InputParser.positionParser("2 3 S");
-        var expectedOutput = new Position(2,3, CompassDirection.S);
+        var expectedOutput = new Position(2, 3, CompassDirection.S);
 
         assertEquals(expectedOutput.getX(), input.getX());
         assertEquals(expectedOutput.getY(), input.getY());
@@ -59,11 +59,19 @@ public class ParserTest {
     public void testsInvalidCompassDirection() {
 
         var input = InputParser.positionParser("2 3 w");
-        var expectedOutput = new Position(4,2, CompassDirection.S);
+        var expectedOutput = new Position(4, 2, CompassDirection.S);
 
         assertNotEquals(expectedOutput.getX(), input.getX());
         assertNotEquals(expectedOutput.getY(), input.getY());
         assertNotEquals(expectedOutput.getFacing(), input.getFacing());
+    }
+
+    @Test
+    @DisplayName("Testing if the compass is only E, S, W or N")
+    public void testsInvalidCompassDirectionInvalidData() {
+        Executable executable = () -> InputParser.positionParser("2 6 z");
+
+        assertThrows(IllegalArgumentException.class, executable, "IllegalArgumentException");
     }
 
     @Test
