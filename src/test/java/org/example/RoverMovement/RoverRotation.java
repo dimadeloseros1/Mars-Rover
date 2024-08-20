@@ -21,10 +21,10 @@ public class RoverRotation {
         var rover = new Rover(CompassDirection.N, new Position(2, 2, CompassDirection.N));
 
         rover.turnLeft();
-        assertEquals(CompassDirection.W, rover.getFacing(), "Rover is facing WEST after turning left from North");
+        assertEquals(CompassDirection.W, rover.getDirection(), "Rover is facing WEST after turning left from North");
 
         rover.turnLeft();
-        assertEquals(CompassDirection.S, rover.getFacing(), "Rover should face SOUTH after turning left from West");
+        assertEquals(CompassDirection.S, rover.getDirection(), "Rover should face SOUTH after turning left from West");
     }
 
     @Test
@@ -33,10 +33,10 @@ public class RoverRotation {
         var rover = new Rover(CompassDirection.N, new Position(2, 2, CompassDirection.N));
 
         rover.turnRight();
-        assertEquals(CompassDirection.N, rover.getFacing(), "Rover should face NORTH after turning right from West");
+        assertEquals(CompassDirection.N, rover.getDirection(), "Rover should face NORTH after turning right from West");
 
         rover.turnRight();
-        assertEquals(CompassDirection.S, rover.getFacing(), "Rover should face South after turning right from East");
+        assertEquals(CompassDirection.S, rover.getDirection(), "Rover should face South after turning right from East");
 
     }
 
