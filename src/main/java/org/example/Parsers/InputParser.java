@@ -15,12 +15,11 @@ public class InputParser {
     public static PlateauSize plateauSizeParser(String input) {
         String[] splittingStr = input.split(" ");
 
-        if (splittingStr.length > 2) {
-            throw new IllegalArgumentException();
+        if (splittingStr.length > 2 || splittingStr.length == 1) {
+            throw new IllegalArgumentException("Coordinates must be 2 numbers between 0 and 10(included)");
         }
 
         try {
-
             int xCord = Integer.parseInt(splittingStr[0]);
             int yCord = Integer.parseInt(splittingStr[1]);
 
@@ -54,7 +53,6 @@ public class InputParser {
                 throw new IllegalArgumentException("Compass direction must be either N,W,E or S");
             }
             return new Position(xCord, yCord, compassDirection);
-
 
         } catch (IllegalArgumentException exc) {
             throw new IllegalArgumentException("Invalid input " + exc.getMessage());
