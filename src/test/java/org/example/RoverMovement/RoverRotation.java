@@ -1,6 +1,8 @@
 package org.example.RoverMovement;
 
 import org.example.Actions.GameManager;
+import org.example.Actions.Position;
+import org.example.Actions.Rover;
 import org.example.Enums.CompassDirection;
 import org.example.Enums.InstructionsVals;
 import org.example.Parsers.InputParser;
@@ -15,29 +17,27 @@ public class RoverRotation {
 
     @Test
     @DisplayName("This method will check whether the rover rotation works accordingly")
-    public void RoverMovementValidDirection() {
-        var rover = new GameManager();
-        var movingLeft = InputParser.instructionParser("l");
-        var movingRight = InputParser.instructionParser("r");
+    public void testRoverTurnLeft() {
+        var rover = new Rover(CompassDirection.N, new Position(2, 2, CompassDirection.N));
 
-        var onNorthAndMovingLeft = rover.rotate(CompassDirection.N, movingLeft);
-        var onEastAndMovingRight = rover.rotate(CompassDirection.E, movingRight);
+        rover.turnLeft();
+        assertEquals(CompassDirection.W, rover.getFacing(), "Rover is facing WEST after turning left from North");
 
-        assertEquals(CompassDirection.W, onNorthAndMovingLeft);
-        assertEquals(CompassDirection.S, onEastAndMovingRight);
+        rover.turnLeft();
+        assertEquals(CompassDirection.S, rover.getFacing(), "Rover should face SOUTH after turning left from West");
     }
 
     @Test
     @DisplayName("This method will check for invalid compass direction")
-    public void RoverMovementInvalidDirection() {
-        var rover = new GameManager();
-        var instructionParser = InputParser.instructionParser("l");
+    public void testRoverTurnRight() {
+        var rover = new Rover(CompassDirection.N, new Position(2, 2, CompassDirection.N));
 
-        var roverMovement = rover.rotate(CompassDirection.N, instructionParser);
+        rover.turnRight();
+        assertEquals(CompassDirection.N, rover.getFacing(), "Rover should face NORTH after turning right from West");
 
-        assertNotEquals(CompassDirection.E, roverMovement);
-        assertNotEquals(CompassDirection.N, roverMovement);
-        assertNotEquals(CompassDirection.S, roverMovement);
+        rover.turnRight();
+        assertEquals(CompassDirection.S, rover.getFacing(), "Rover should face South after turning right from East");
+
     }
 
 }
