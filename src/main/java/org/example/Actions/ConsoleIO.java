@@ -2,13 +2,14 @@ package org.example.Actions;
 
 import org.example.Enums.CompassDirection;
 import org.example.Enums.InstructionsVals;
+import org.example.Parsers.InputParser;
 
 import java.util.Scanner;
 
 public class ConsoleIO {
 
 
-    public static String instructionScanner(String str) {
+    public static String roverInstructionInput(String str) {
         Scanner scanner = new Scanner(System.in);
         String input;
 
@@ -16,12 +17,33 @@ public class ConsoleIO {
             try {
                 System.out.print(str);
                 input = scanner.nextLine();
-                if (input.equalsIgnoreCase("l") || input.equalsIgnoreCase("r")) {
+                if (input.matches("[LRMlrm]+")) {
                     break;
                 } else {
-                    System.out.println("Please make sure to input either (l) or (r)");
+                    System.err.println("Please input correct letters");
                 }
             } catch (IllegalArgumentException ex) {
+                throw new IllegalStateException();
+            }
+        } while (true);
+        scanner.close();
+        return input;
+    }
+
+    public static String plateauInput(String str) {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        do {
+            try {
+                System.out.print(str);
+                input = scanner.nextLine();
+                if (!input.isEmpty()) {
+                    break;
+                } else {
+                    System.out.println("Make sure that the input is not empty");
+                }
+            } catch (IllegalArgumentException exc) {
                 throw new IllegalStateException();
             }
         } while (true);
