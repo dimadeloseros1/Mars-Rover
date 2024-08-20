@@ -1,54 +1,75 @@
 package org.example.Actions;
 
-import org.example.Enums.CompassDirection;
 import org.example.Enums.InstructionsVals;
-
-import java.util.List;
+import org.example.Parsers.InputParser;
 
 public class GameManager {
 
-    public CompassDirection rotate(CompassDirection direction, List<InstructionsVals> instructions) {
-        var compassDirection = direction;
-
-        for (InstructionsVals instr : instructions) {
-            switch (compassDirection) {
-                case N:
-                    if (instr == InstructionsVals.R) {
-                        direction = CompassDirection.E;
-                        System.out.println("You are currently on EAST");
-                    } else if (instr == InstructionsVals.L) {
-                        direction = CompassDirection.W;
-                        System.out.println("You are currently on WEST");
-                    }
-                    break;
-
-                case S:
-                    if (instr == InstructionsVals.R) {
-                        direction = CompassDirection.W;
-                        System.out.println("You are currently on WEST");
-                    } else if (instr == InstructionsVals.L) {
-                        direction = CompassDirection.E;
-                        System.out.println("You are currently on EAST");
-                    }
-                    break;
-
-                case E:
-                    if (instr == InstructionsVals.R) {
-                        direction = CompassDirection.S;
-                    } else if (instr == InstructionsVals.L) {
-                        direction = CompassDirection.N;
-                    }
-                    break;
-
-                case W:
-                    if (instr == InstructionsVals.R) {
-                        direction = CompassDirection.N;
-                    } else if (instr == InstructionsVals.L) {
-                        direction = CompassDirection.S;
-                    }
-                    break;
+    public PlateauSize plateauSize() {
+        PlateauSize plateau;
+        do {
+            try {
+                var roverInput = ConsoleIO.plateauInput("Please enter the plateau size: ");
+                plateau = InputParser.plateauSizeParser(roverInput);
+                System.out.println("Plateau size accepted: " + plateau);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
-        }
-        return direction;
+        } while (true);
+        return plateau;
+    }
+
+    public Position vehicle(PlateauSize plateau) {
+        Position roverPosition;
+        do {
+            try {
+                var roverLandingInput = ConsoleIO.plateauInput("Please enter the rover's landing position: ");
+                roverPosition = InputParser.positionParser(roverLandingInput);
+
+                if (roverPosition.getX() <= plateau.getX() && roverPosition.getY() <= plateau.getY()) {
+                    System.out.println("Rover landed at: " + roverPosition.getX() + " " + roverPosition.getY() + " " + roverPosition.getFacing());
+                    break;
+                } else {
+                    System.out.println("Rover position out of bounds. Please enter a valid position.");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
+        return roverPosition;
+    }
+
+    public void roverInstr(Position roverCurrPosition, PlateauSize plateau) {
+        Rover rover = new Rover(roverCurrPosition.getFacing(), roverCurrPosition);
+
+        String instructions;
+        do  {
+            try {
+                instructions = ConsoleIO.roverInstructionInput("Please enter the movement instructions: ");
+                var instructionList = InputParser.instructionParser(instructions);
+
+                for (InstructionsVals instruction : instructionList) {
+                    switch (instruction) {
+                        case L -> rover.turnLeft();
+                        case R -> rover.turnRight();
+                        case M -> rover.move();
+                    }
+                }
+
+                Position position = rover.getPosition();
+                if (position.getX() <= plateau.getX() && position.getY() <= plateau.getY()) {
+                    System.out.println("Rover has moved to: " + position.getX() + " " + position.getY() + " " + position.getFacing());
+                } else {
+                    System.out.println("Rover moved out of bounds.");
+                }
+
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        } while (true);
     }
 }
+
+
