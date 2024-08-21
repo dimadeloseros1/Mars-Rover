@@ -4,8 +4,14 @@ A rover has been delivered to Mars on a square/rectangular plateau, which has be
 
 INSTRUCTIONS
 
-
     M - move the rover 1 grid point in the direction the rover is currently facing
     L - rotate the rover to the left
     R - rotate the rover to the right
 
+INSTALLATION
+
+    Install latest version of Java
+    Install a Java IDE
+    Clone the repository and open it with your IDE
+    Navigate to Main
+    Run the application
